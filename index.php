@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-md-12">
 		    <div class="page-header clearfix">
-		     <h2> Sample Project CS 340 </h2> 
+		     <h2> Jewelry Database CS 340 </h2> 
                        <p> Project should include CRUD operations. In this website you can:
 				<ol> 	<li> CREATE new employess and  dependents </li>
 					<li> RETRIEVE all dependents and prjects for an employee</li>
