@@ -1,31 +1,24 @@
 <?php
 	session_start();
-	if(isset($_GET["Dname"]) && !empty(trim($_GET["Dname"]))){
-		$_SESSION["Dname"] = $_GET["Dname"];
-		$Dname = $_GET["Dname"];
+	if(isset($_GET["Ssn"]) && !empty(trim($_GET["Ssn"]))){
+		$_SESSION["Ssn"] = $_GET["Ssn"];
 	}
 
     require_once "config.php";
-	// Delete an Dependents's record after confirmation
+	// Delete an Employee's record after confirmation
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_SESSION["Ssn"]) && !empty($_SESSION["Ssn"])){ 
-			$Essn = $_SESSION['Ssn'];
-			$Dname = $_SESSION['Dname'];
-			
+			$Ssn = $_SESSION['Ssn'];
 			// Prepare a delete statement
-			$sql = "DELETE FROM DEPENDENT WHERE Essn = ? 
-						AND Dependent_name = ?";
+			$sql = "DELETE FROM EMPLOYEE WHERE Ssn = ?";
    
 			if($stmt = mysqli_prepare($link, $sql)){
 			// Bind variables to the prepared statement as parameters
-				mysqli_stmt_bind_param($stmt, "ss", $param_Essn, $param_Dname);
+				mysqli_stmt_bind_param($stmt, "s", $param_Ssn);
  
 				// Set parameters
-				$param_Essn = $Essn;
-				$param_Dname = $Dname;
-				//echo $Essn;
-				//echo $Dname;
-
+				$param_Ssn = $Ssn;
+       
 				// Attempt to execute the prepared statement
 				if(mysqli_stmt_execute($stmt)){
 					// Records deleted successfully. Redirect to landing page
@@ -43,13 +36,12 @@
 		mysqli_close($link);
 	} else{
 		// Check existence of id parameter
-		if(empty(trim($_GET["Dname"]))){
+		if(empty(trim($_GET["Ssn"]))){
 			// URL doesn't contain id parameter. Redirect to error page
 			header("location: error.php");
 			exit();
 		}
 	}
-	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,8 +67,7 @@
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="alert alert-danger fade in">
                             <input type="hidden" name="Ssn" value="<?php echo ($_SESSION["Ssn"]); ?>"/>
-                            <p>Are you sure you want to delete the record for Dependent of 
-							     <?php echo ($_SESSION["Ssn"]); echo " ".$Dname; ?>?</p><br>
+                            <p>Are you sure you want to delete the record for <?php echo ($_SESSION["Ssn"]); ?>?</p><br>
                                 <input type="submit" value="Yes" class="btn btn-danger">
                                 <a href="index.php" class="btn btn-default">No</a>
                             </p>
