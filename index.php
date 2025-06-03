@@ -43,15 +43,16 @@
             <div class="row">
                 <div class="col-md-12">
 		    <div class="page-header clearfix">
+            <nav>
+                </br>
+                <a href="index.php">Home</a> | 
+                <a href="viewShops.php">View Shops</a> | 
+                <a href="viewCustomers.php">View Customers</a>
+            </nav>
 		     <h2> Jewelry Shop Database </h2> 
-                       <p> Project should include CRUD operations. In this website you can:
-				<ol> 	<li> CREATE new employess and  dependents </li>
-					<li> RETRIEVE all dependents and prjects for an employee</li>
-                                        <li> UPDATE employeee and dependent records</li>
-					<li> DELETE employee and dependent records </li>
-				</ol>
-		       <h2 class="pull-left">Employee Details</h2>
-                        <a href="createEmployee.php" class="btn btn-success pull-right">Add New Employee</a>
+                       <p>Hailey, Lydia, and Salem's Jewelry Store				
+		       <h2 class="pull-left">Jewelry</h2>
+               <a href="createJewelry.php" class="btn btn-success pull-right">Add Jewelry</a>
                     </div>
                     <?php
                     // Include config file
@@ -64,29 +65,28 @@
 						$sql = "SELECT Ssn,Fname,Lname,Salary, Address, Bdate, PayLevel(Ssn) as Level, Super_ssn, Dno
 							FROM EMPLOYEE";
 					*/
-                    $sql = "SELECT e_name, employee_id, salary
-							FROM fp_employee";
+                    $sql = "SELECT type, primary_material, price
+							FROM fp_jewelry";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th width=10%>First Name</th>";
-                                        echo "<th width=8%>Employee ID</th>";
-                                        echo "<th width=10%>First Salary</th>";
+                                        echo "<th width=40%>Jewelry Type</th>";
+                                        echo "<th width=30%>Primary Material</th>";
+                                        echo "<th width=10%>Price</th>";
+                                        echo "<th width=15%>Edit</th>";
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
-                                        echo "<td>" . $row['e_name'] . "</td>";
-                                        echo "<td>" . $row['employee_id'] . "</td>";
-                                        echo "<td>" . $row['salary'] . "</td>";
+                                        echo "<td>" . $row['type'] . "</td>";
+                                        echo "<td>" . $row['primary_material'] . "</td>";
+                                        echo "<td>$" . $row['price'] . ".00</td>";
                                         echo "<td>";
-                                            echo "<a href='viewProjects.php?Ssn=". $row['Ssn']."&Lname=".$row['Lname']."' title='View Projects' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                            echo "<a href='updateEmployee.php?Ssn=". $row['Ssn'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            echo "<a href='deleteEmployee.php?Ssn=". $row['Ssn'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-											echo "<a href='viewDependents.php?Ssn=". $row['Ssn']."&Lname=".$row['Lname']."' title='View Dependents' data-toggle='tooltip'><span class='glyphicon glyphicon-user'></span></a>";
+                                            echo "<a href='updateJewelry.php?Ssn=". $row['Ssn'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                            echo "<a href='deleteJewelry.php?Ssn=". $row['Ssn'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                         echo "</td>";
                                     echo "</tr>";
                                 }
@@ -99,42 +99,6 @@
                         }
                     } else{
                         echo "ERROR: Could not able to execute $sql. <br>" . mysqli_error($link);
-                    }
-					echo "<br> <h2> Department Stats </h2> <br>";
-					
-                    // Select Department Stats
-					// You will need to Create a DEPT_STATS table
-					
-                    $sql2 = "SELECT * FROM DEPT_STATS";
-                    if($result2 = mysqli_query($link, $sql2)){
-                        if(mysqli_num_rows($result2) > 0){
-                            echo "<div class='col-md-4'>";
-							echo "<table width=30% class='table table-bordered table-striped'>";
-                                echo "<thead>";
-                                    echo "<tr>";
-                                        echo "<th width=20%>Dno</th>";
-                                        echo "<th width = 20%>Number of Employees</th>";
-                                        echo "<th width = 40%>Average Salary</th>";
-	
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while($row = mysqli_fetch_array($result2)){
-                                    echo "<tr>";
-                                        echo "<td>" . $row['Dnumber'] . "</td>";
-                                        echo "<td>" . $row['Emp_count'] . "</td>";
-                                        echo "<td>" . $row['Avg_salary'] . "</td>";
-               
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";                            
-                            echo "</table>";
-                            // Free result set
-                            mysqli_free_result($result2);
-                        } else{
-                            echo "<p class='lead'><em>No records were found for Dept Stats.</em></p>";
-                        }
-                    } else{
-                        echo "ERROR: Could not able to execute $sql2. <br>" . mysqli_error($link);
                     }
 					
                     // Close connection

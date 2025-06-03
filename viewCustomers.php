@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Shop Addresses</title>
+    <title>View Customers</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
@@ -43,7 +43,7 @@
                         </br>
                         </br>
                     </nav>
-                        <h2 class="pull-left">Shop Addresses</h2>
+                        <h2 class="pull-left">View Customers</h2>
                     </div>
 <?php
 
@@ -59,23 +59,27 @@
 	
 	
     // Prepare a select statement
-    $sql = "SELECT shop_address
-			FROM fp_shop";
+    $sql = "SELECT c_name, c_email, customer_id
+			FROM fp_customer";
             if($result = mysqli_query($link, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     echo "<table class='table table-bordered table-striped'>";
                         echo "<thead>";
                             echo "<tr>";
-                                echo "<th width=70%>Shop Address</th>";
-                                echo "<th width=70%>View Employees</th>";
+                                echo "<th width=10%>Customer Name</th>";
+                                echo "<th width=10%>Customer Email</th>";
+                                echo "<th width=10%>Customer ID</th>";
+                                echo "<th width=10%>View Orders</th>";
                             echo "</tr>";
                         echo "</thead>";
                         echo "<tbody>";
                         while($row = mysqli_fetch_array($result)){
                             echo "<tr>";
-                                echo "<td>" . $row['shop_address'] . "</td>";
+                                echo "<td>" . $row['c_name'] . "</td>";
+                                echo "<td>" . $row['c_email'] . "</td>";
+                                echo "<td>" . $row['customer_id'] . "</td>";
                                 echo "<td>";
-                                    echo "<a href='viewEmployee.php?shop_address=". $row['shop_address']."' title='View Employees' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                                    echo "<a href='viewOrders.php?Ssn=". $row['Ssn']."&Lname=".$row['Lname']."' title='View Projects' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
                                 echo "</td>";
                             echo "</tr>";
                         }
