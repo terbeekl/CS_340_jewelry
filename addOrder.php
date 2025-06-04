@@ -91,7 +91,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <div class="page-header">
-                        <h3>Add a Project </h3>
+                        <h3>Add an Order </h3>
 						<h4><?php echo $Lname;?> SSN = <?php echo $Ssn;?></h4>
                     </div>
 				

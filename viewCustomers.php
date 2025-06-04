@@ -45,18 +45,7 @@
                         </nav>
                         <h2 class="pull-left">View Customers</h2>
                     </div>
-<?php
-
-// Check existence of id parameter before processing further
-// if(isset($_GET["Ssn"]) && !empty(trim($_GET["Ssn"]))){
-// 	$_SESSION["Ssn"] = $_GET["Ssn"];
-// }
-// if(isset($_GET["Lname"]) && !empty(trim($_GET["Lname"]))){
-// 	$_SESSION["Lname"] = $_GET["Lname"];
-// }
-
-//if(isset($_SESSION["Ssn"]) ){
-	
+<?php	
 	
     // Prepare a select statement
     $sql = "SELECT c_name, c_email, customer_id
@@ -79,7 +68,7 @@
                                 echo "<td>" . $row['c_email'] . "</td>";
                                 echo "<td>" . $row['customer_id'] . "</td>";
                                 echo "<td>";
-                                    echo "<a href='viewOrders.php?Ssn=". $row['Ssn']."&Lname=".$row['Lname']."' title='View Projects' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                                    echo "<a href='viewOrders.php?customer_id=". $row['customer_id']."&c_name=".$row['c_name']."' title='View Orders' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
                                 echo "</td>";
                             echo "</tr>";
                         }

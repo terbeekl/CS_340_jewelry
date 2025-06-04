@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Dependents</title>
+    <title>View Employees</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
@@ -55,10 +55,8 @@ if(isset($_GET["shop_address"]) && !empty(trim($_GET["shop_address"]))){
 
 if(isset($_SESSION["shop_address"]) ){
 	
-	
     // Prepare a select statement
-    $sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE.shop_address = ? ";
-
+    $sql = "SELECT * FROM fp_employee WHERE shop_address = ? ";
   
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -70,7 +68,7 @@ if(isset($_SESSION["shop_address"]) ){
         if(mysqli_stmt_execute($stmt)){
             $result = mysqli_stmt_get_result($stmt);
     
-			echo"<h4> Employees for ".$shop_address." &nbsp      </h4><p>";
+			echo "<h4> Employees for ". $param_addy ."</h4><p>";
 			if(mysqli_num_rows($result) > 0){
 				echo "<table class='table table-bordered table-striped'>";
                     echo "<thead>";
@@ -93,7 +91,7 @@ if(isset($_SESSION["shop_address"]) ){
                 echo "</table>";				
 				mysqli_free_result($result);
 			} else {
-				echo "No Dependents. ";
+				echo "No Employees. ";
 			}
 //				mysqli_free_result($result);
         } else{
@@ -113,7 +111,7 @@ if(isset($_SESSION["shop_address"]) ){
     exit();
 }
 ?>					                 					
-	<p><a href="index.php" class="btn btn-primary">Back</a></p>
+	<p><a href="viewShops.php" class="btn btn-primary">Back</a></p>
     </div>
    </div>        
   </div>

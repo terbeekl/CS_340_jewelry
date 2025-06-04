@@ -94,8 +94,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Create Dependent</h2>
-						<h3> For employee with SSN = <?php echo $Ssn; ?> </h3>
+                        <h2>Create Employee</h2>
+						<h3> For <?php echo $shop_address; ?> </h3>
                     </div>
                     
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
