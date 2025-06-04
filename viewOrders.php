@@ -35,8 +35,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="pull-left">View Projects</h2>
-						<a href="addProject.php" class="btn btn-success pull-right">Add Project</a>
+                        <nav>
+                            </br>
+                            <a href="index.php">Home</a> | 
+                            <a href="viewShops.php">View Shops</a> | 
+                            <a href="viewCustomers.php">View Customers</a>
+                            </br>
+                            </br>
+                        </nav>
+                        <h2 class="pull-left">View Orders</h2>
                     </div>
 <?php
 

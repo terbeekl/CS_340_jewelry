@@ -35,14 +35,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                    <nav>
-                        </br>
-                        <a href="index.php">Home</a> | 
-                        <a href="viewShops.php">View Shops</a> | 
-                        <a href="viewCustomers.php">View Customers</a>
-                        </br>
-                        </br>
-                    </nav>
+                        <nav>
+                            </br>
+                            <a href="index.php">Home</a> | 
+                            <a href="viewShops.php">View Shops</a> | 
+                            <a href="viewCustomers.php">View Customers</a>
+                            </br>
+                            </br>
+                        </nav>
                         <h2 class="pull-left">View Customers</h2>
                     </div>
 <?php

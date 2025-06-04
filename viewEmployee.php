@@ -57,7 +57,7 @@ if(isset($_SESSION["shop_address"]) ){
 	
 	
     // Prepare a select statement
-    $sql = "SELECT * FROM EMPLOYEE WHERE shop_address = ? ";
+    $sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE.shop_address = ? ";
 
   
     if($stmt = mysqli_prepare($link, $sql)){
