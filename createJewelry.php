@@ -3,81 +3,62 @@
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$Ssn = $Lname = $Fname = $Salary = $Bdate = $Bdate1 = $Address = $Sex = $Dno = $Super_ssn = "";
-$Ssn_err = $Lname_err = $Fname_err = $Address_err = $Sex_err = $Salary_err = $Dno_err =$Bdate_err= "" ;
+$jewelry_id = $type = $primary_material = $price = $order_number = "";
+$jewelry_id_err = $type_err = $primary_material_err = $price_err = $order_number_err = "" ;
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    // Validate First name
-    $Fname = trim($_POST["Fname"]);
-    if(empty($Fname)){
-        $Fname_err = "Please enter a Fname.";
-    } elseif(!filter_var($Fname, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $Fname_err = "Please enter a valid Fname.";
+    // Validate type
+    $type = trim($_POST["Type"]);
+    if(empty($type)){
+        $type_err = "Please enter a jewelry type.";
+    } elseif(!filter_var($type, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+        $type_err = "Please enter a valid jewelry type.";
     } 
-    // Validate Last name
-    $Lname = trim($_POST["Lname"]);
-    if(empty($Lname)){
-        $Lname_err = "Please enter a Lname.";
-    } elseif(!filter_var($Lname, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $Lname_err = "Please enter a valid Lname.";
+    // Validate primary_material
+    $primary_material = trim($_POST["Primary Material"]);
+    if(empty($primary_material)){
+        $primary_material_err = "Please enter a primary material.";
+    } elseif(!filter_var($primary_material, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+        $primary_material_err = "Please enter a valid primary material.";
     } 
  
-    // Validate SSN
-    $Ssn = trim($_POST["Ssn"]);
-    if(empty($Ssn)){
-        $Ssn_err = "Please enter SSN.";     
+    // Validate jewelry_id
+    $jewelry_id = trim($_POST["Jewelry ID"]);
+    if(empty($jewelry_id)){
+        $jewelry_id_err = "Please enter a jewelry ID.";     
     } elseif(!ctype_digit($Ssn)){
-        $Ssn_err = "Please enter a positive integer value of SSN.";
+        $jewelry_id_err = "Please enter a positive integer jewelry ID.";
     } 
-    // Validate Salary
-    $Salary = trim($_POST["Salary"]);
-    if(empty($Salary)){
-        $Salary_err = "Please enter Salary.";     
+    // Validate order_number
+    $order_number = trim($_POST["Order Number"]);
+    if(empty($order_number)){
+        $order_number_err = "Please enter an order number.";     
     }
-	// Validate Address
-    $Address = trim($_POST["Address"]);
-    if(empty($Address)){
-        $Address_err = "Please enter Address.";     
+	// Validate price
+    $price = trim($_POST["Price"]);
+    if(empty($price)){
+        $price_err = "Please enter a monetary value.";     
     }
-	// Validate Sex
-    $Sex = trim($_POST["Sex"]);
-    if(empty($Sex)){
-        $Sex_err = "Please enter Sex.";     
-    }
-	// Validate Birthdate
-    $Bdate = trim($_POST["Bdate"]);
 
-    if(empty($Bdate)){
-        $Bdate_err = "Please enter birthdate.";     
-    }	
-
-	// Validate Department
-    $Dno = trim($_POST["Dno"]);
-    if(empty($Dno)){
-        $Dno_err = "Please enter a department number.";     		
-	}
     // Check input errors before inserting in database
-    if(empty($Ssn_err) && empty($Lname_err) && empty($Salary_err) 
-				&& empty($Dno_err)&& empty($Address_err) && empty($Sex_err)){
+    if(empty($jewelry_id_err) && empty($price_err) && empty($type_err) 
+				&& empty($order_number_err)&& empty($primary_material_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO EMPLOYEE (Ssn, Fname, Lname, Address, Salary, Sex, Bdate, Dno) 
+        $sql = "INSERT INTO fp_jewelry (jewelry_id, type, primary_material, price, order_number) 
 		        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "isssdssi", $param_Ssn, $param_Fname, $param_Lname, 
-				$param_Address, $param_Salary, $param_Sex, $param_Bdate, $param_Dno);
+            mysqli_stmt_bind_param($stmt, "isssdssi", $param_jewelry_id, $param_type, $param_primary_material, 
+				$param_price, $param_order_number);
             
             // Set parameters
-			$param_Ssn = $Ssn;
-            $param_Lname = $Lname;
-			$param_Fname = $Fname;
-			$param_Address = $Address;
-			$param_Sex = $Sex;
-			$param_Bdate = $Bdate;
-            $param_Salary = $Salary;
-            $param_Dno = $Dno;
+			$param_jewelry_id = $jewelry_id;
+            $param_primary_material = $primary_material;
+			$param_type = $type;
+			$param_price = $price;
+			$param_order_number = $order_number;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -85,8 +66,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				    header("location: index.php");
 					exit();
             } else{
-                echo "<center><h4>Error while creating new employee</h4></center>";
-				$Ssn_err = "Enter a unique Ssn.";
+                echo "<center><h4>Error while creating new jewelry</h4></center>";
+				$jewelry_id_err = "Enter a unique jewelry ID.";
             }
         }
          
@@ -120,49 +101,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <div class="page-header">
                         <h2>Create Record</h2>
                     </div>
-                    <p>Please fill this form and submit to add an Employee record to the database.</p>
+                    <p>Please fill this form and submit to add a new piece of jewelry to the database.</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-						<div class="form-group <?php echo (!empty($Ssn_err)) ? 'has-error' : ''; ?>">
-                            <label>SSN</label>
-                            <input type="text" name="Ssn" class="form-control" value="<?php echo $Ssn; ?>">
-                            <span class="help-block"><?php echo $Ssn_err;?></span>
+						<div class="form-group <?php echo (!empty($jewelry_id_err)) ? 'has-error' : ''; ?>">
+                            <label>Jewelry ID</label>
+                            <input type="text" name="jewelry_id" class="form-control" value="<?php echo $jewelry_id; ?>">
+                            <span class="help-block"><?php echo $jewelry_id_err;?></span>
                         </div>
                  
-						<div class="form-group <?php echo (!empty($Fname_err)) ? 'has-error' : ''; ?>">
-                            <label>First Name</label>
-                            <input type="text" name="Fname" class="form-control" value="<?php echo $Fname; ?>">
-                            <span class="help-block"><?php echo $Fname_err;?></span>
+						<div class="form-group <?php echo (!empty($type_err)) ? 'has-error' : ''; ?>">
+                            <label>Type</label>
+                            <input type="text" name="type" class="form-control" value="<?php echo $type; ?>">
+                            <span class="help-block"><?php echo $type_err;?></span>
                         </div>
-						<div class="form-group <?php echo (!empty($Lname_err)) ? 'has-error' : ''; ?>">
-                            <label>Last Name</label>
-                            <input type="text" name="Lname" class="form-control" value="<?php echo $Lname; ?>">
-                            <span class="help-block"><?php echo $Lname_err;?></span>
+						<div class="form-group <?php echo (!empty($primary_material_err)) ? 'has-error' : ''; ?>">
+                            <label>Primary Material</label>
+                            <input type="text" name="primary_material" class="form-control" value="<?php echo $primary_material; ?>">
+                            <span class="help-block"><?php echo $primary_material_err;?></span>
                         </div>
-						<div class="form-group <?php echo (!empty($Address_err)) ? 'has-error' : ''; ?>">
-                            <label>Address</label>
-                            <input type="text" name="Address" class="form-control" value="<?php echo $Address; ?>">
-                            <span class="help-block"><?php echo $Address_err;?></span>
+						<div class="form-group <?php echo (!empty($price_err)) ? 'has-error' : ''; ?>">
+                            <label>Price</label>
+                            <input type="text" name="price" class="form-control" value="<?php echo $price; ?>">
+                            <span class="help-block"><?php echo $price_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($Salary_err)) ? 'has-error' : ''; ?>">
-                            <label>Salary</label>
-                            <input type="text" name="Salary" class="form-control" value="<?php echo $Salary; ?>">
-                            <span class="help-block"><?php echo $Salary_err;?></span>
+                        <div class="form-group <?php echo (!empty($order_number_err)) ? 'has-error' : ''; ?>">
+                            <label>Order Number</label>
+                            <input type="text" name="order_number" class="form-control" value="<?php echo $order_number; ?>">
+                            <span class="help-block"><?php echo $order_number_err;?></span>
                         </div>
-						<div class="form-group <?php echo (!empty($Sex_err)) ? 'has-error' : ''; ?>">
-                            <label>Sex</label>
-                            <input type="text" name="Sex" class="form-control" value="<?php echo $Sex; ?>">
-                            <span class="help-block"><?php echo $Sex_err;?></span>
-                        </div>
-						                  
-						<div class="form-group <?php echo (!empty($Bdate_err)) ? 'has-error' : ''; ?>">
-                            <label>Birth date</label>
-                            <input type="date" name="Bdate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
-                            <span class="help-block"><?php echo $Bdate_err;?></span>
-                        </div>
-                        <div class="form-group <?php echo (!empty($Dno_err)) ? 'has-error' : ''; ?>">
-                            <label>Dno</label>
-                            <input type="number" min ="1" max ="20" name="Dno" class="form-control" value="<?php echo $Dno; ?>">
-                            <span class="help-block"><?php echo $Dno_err;?></span>
+		
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <a href="index.php" class="btn btn-default">Cancel</a>
