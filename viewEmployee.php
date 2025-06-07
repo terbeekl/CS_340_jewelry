@@ -81,10 +81,10 @@ if(isset($_SESSION["shop_address"]) ){
                     while($row = mysqli_fetch_array($result)){
                         echo "<tr>";
                         echo "<td>" . $row['e_name'] . "</td>";
-						echo "<td>";
+						//echo "<td>";
 						  //echo "<a href='updateDependent.php?Dname=". $row['Dependent_name'] ."' title='Update Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                           //echo "<a href='deleteDependent.php?Dname=". $row['Dependent_name'] ."' title='Delete Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                        echo "</td>";
+                        //echo "</td>";
 						echo "</tr>";
                     }
                     echo "</tbody>";                            

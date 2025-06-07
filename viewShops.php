@@ -67,7 +67,7 @@
                         echo "<thead>";
                             echo "<tr>";
                                 echo "<th width=70%>Shop Address</th>";
-                                echo "<th width=70%>View Employees</th>";
+                                echo "<th width=70%>Additional Shop Info</th>";
                             echo "</tr>";
                         echo "</thead>";
                         echo "<tbody>";
@@ -76,7 +76,9 @@
                                 echo "<td>" . $row['shop_address'] . "</td>";
                                 echo "<td>";
                                     echo "<a href='viewEmployee.php?shop_address=". $row['shop_address']."' title='View Employees' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                echo "</td>";
+				echo "<a href='viewStock.php?shop_address=". $row['shop_address']."' title='View Stock' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+				echo "<a href='viewVisitRecords.php?shop_address=". $row['shop_address']."' title='View Customer Vist History' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+				echo "</td>";
                             echo "</tr>";
                         }
                         echo "</tbody>";                            

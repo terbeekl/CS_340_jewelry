@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Orders</title>
+    <title>View Stock</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
@@ -43,59 +43,56 @@
                             </br>
                             </br>
                         </nav>
-                        <h2 class="pull-left">View Orders</h2>
-						<a href="addOrder.php" class="btn btn-success pull-right">Add Order</a>
+                        <h2 class="pull-left">View Stock</h2>
                     </div>
 <?php
 
 // Check existence of id parameter before processing further
-if(isset($_GET["customer_id"]) && !empty(trim($_GET["customer_id"]))){
-	$_SESSION["customer_id"] = $_GET["customer_id"];
-}
-if(isset($_GET["c_name"]) && !empty(trim($_GET["c_name"]))){
-	$_SESSION["c_name"] = $_GET["c_name"];
+if(isset($_GET["shop_address"]) && !empty(trim($_GET["shop_address"]))){
+	$_SESSION["shop_address"] = $_GET["shop_address"];
 }
 
-if(isset($_SESSION["customer_id"]) ){
+if(isset($_SESSION["shop_address"]) ){
+	
     // Prepare a select statement
-    $sql = "SELECT * FROM fp_order WHERE customer_id = ? ";
-
+    $sql = "SELECT * FROM fp_stock WHERE shop_address = ? ";
+  
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "s", $param_cid);      
+        mysqli_stmt_bind_param($stmt, "s", $param_addy);      
         // Set parameters
-       $param_cid = $_SESSION["customer_id"];
-       $cname = $_SESSION["c_name"];
+       $param_addy = $_SESSION["shop_address"];
 
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
             $result = mysqli_stmt_get_result($stmt);
     
-			echo "<h4> Orders for ". $cname ."</h4><p>";
+			echo "<h4> Jewelry in Stock at the Location on ". $param_addy ."</h4><p>";
 			if(mysqli_num_rows($result) > 0){
 				echo "<table class='table table-bordered table-striped'>";
                     echo "<thead>";
                         echo "<tr>";
-				echo "<th>Order Number</th>";
-				echo "<th>View Order Jewelry</th>";
+				echo "<th>Jewelry ID</th>";
+				echo "<th>Quantity In Stock</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";							
 				// output data of each row
                     while($row = mysqli_fetch_array($result)){
                         echo "<tr>";
-                        echo "<td>" . $row['order_number'] . "</td>";
-						echo "<td>";
-						  echo "<a href='viewOrderJewelry.php?order_number=". $row['order_number'] ."' title='View Order Jewelry' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+			echo "<td>" . $row['jewelry_id'] . "</td>";
+			echo "<td>" . $row['quantity_in_stock'] . "</td>";
+						//echo "<td>";
+						  //echo "<a href='updateDependent.php?Dname=". $row['Dependent_name'] ."' title='Update Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                           //echo "<a href='deleteDependent.php?Dname=". $row['Dependent_name'] ."' title='Delete Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                        echo "</td>";
+                        //echo "</td>";
 						echo "</tr>";
                     }
                     echo "</tbody>";                            
                 echo "</table>";				
 				mysqli_free_result($result);
 			} else {
-				echo "No Orders. ";
+				echo "No Jewelry in Stock ";
 			}
 //				mysqli_free_result($result);
         } else{
@@ -115,7 +112,7 @@ if(isset($_SESSION["customer_id"]) ){
     exit();
 }
 ?>					                 					
-	<p><a href="viewCustomers.php" class="btn btn-primary">Back</a></p>
+	<p><a href="viewShops.php" class="btn btn-primary">Back</a></p>
     </div>
    </div>        
   </div>
