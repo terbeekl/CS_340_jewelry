@@ -1,59 +1,51 @@
 <?php
 session_start();
-$Ssn = $_SESSION["Ssn"];
+$shop_address = $_SESSION["shop_address"];
 
 // Include config file
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$Dname = $Relationship = $Bdate = $Sex ="" ;
-$Dname_err = $Relationship_err =  $Sex_err =$Bdate_err= "" ;
+$employee_id = $salary = $e_name = "" ;
+$employee_id_err = $salary_err =  $e_name_err = "" ;
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    // Validate Dependent name
-    $Dname = trim($_POST["Dname"]);
-    if(empty($Dname)){
-        $Dname_err = "Please enter a Dname.";
-    } elseif(!filter_var($Dname, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $Dname_err = "Please enter a valid name.";
-    } 
-    // Validate Relationship
-    $Relationship = trim($_POST["Relationship"]);
-    if(empty($Relationship)){
-        $Relationship_err = "Please enter a Relationship.";
-    } elseif(!filter_var($Relationship, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $Relationship_err = "Please enter a valid Relationship.";
+    // Validate Employee name
+    $e_name = trim($_POST["e_name"]);
+    if(empty($e_name)){
+        $e_name_err = "Please enter an employee name.";
+    } elseif(!filter_var($e_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+        $ename_err = "Please enter a valid name.";
     } 
  
-	// Validate Sex
-    $Sex = trim($_POST["Sex"]);
-    if(empty($Sex)){
-        $Sex_err = "Please enter Sex.";     
+	// Validate Salary
+    $salary = trim($_POST["salary"]);
+    if(empty($salary)){
+        $salary_err = "Please enter salary.";     
     }
-	// Validate Birthdate
-    $Bdate = trim($_POST["Bdate"]);
-    if(empty($Bdate)){
-        $Bdate_err = "Please enter birthdate.";     
+	// Validate Employee id
+    $employee_id = trim($_POST["employee_id"]);
+    if(empty($employee_id)){
+        $employee_id_err = "Please enter employee id.";     
     }	
 
     // Check input errors before inserting in database
-    if(empty($Dname_err) && empty($Relationship_err) && empty($Sex_err) && empty($Bdate_err)){
+    if(empty($employee_id_err) && empty($salary_err) && empty($e_name_err) && empty($Bdate_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO DEPENDENT (Essn, Dependent_name, Sex, Bdate, Relationship) 
-		        VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO DEPENDENT (shop_address, e_name, salary, employee_id) 
+		        VALUES (?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_Ssn, $param_Dname, $param_Sex, 
-									$param_Bdate, $param_Relationship);
+            mysqli_stmt_bind_param($stmt, "sssss", $param_shop_address, $param_e_name, $param_salary, 
+									$param_employee_id);
            
             // Set parameters
-			$param_Ssn = $Ssn;
-			$param_Dname = $Dname;
-			$param_Sex = $Sex;
-			$param_Bdate = $Bdate;
-            $param_Relationship = $Relationship;
+			$param_shop_address = $shop_address;
+			$param_e_name = $e_name;
+			$param_salary = $salary;
+			$param_employee_id = $employee_id;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -79,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Record</title>
+    <title>Create Employee</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper{
@@ -95,37 +87,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="col-md-12">
                     <div class="page-header">
                         <h2>Create Employee</h2>
-						<h3> For <?php echo $shop_address; ?> </h3>
+						<h3> For <?php echo $shop_address; ?>: </h3>
                     </div>
                     
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 			
              
-						<div class="form-group <?php echo (!empty($Dname_err)) ? 'has-error' : ''; ?>">
-                            <label>Dependent's Name</label>
-                            <input type="text" name="Dname" class="form-control" value="<?php echo $Dname; ?>">
-                            <span class="help-block"><?php echo $Dname_err;?></span>
+						<div class="form-group <?php echo (!empty($e_name_err)) ? 'has-error' : ''; ?>">
+                            <label>Employee's Name</label>
+                            <input type="text" name="e_name" class="form-control" value="<?php echo $e_name; ?>">
+                            <span class="help-block"><?php echo $e_name_err;?></span>
                         </div>
-						<div class="form-group <?php echo (!empty($Relationship_err)) ? 'has-error' : ''; ?>">
-                            <label>Relationship</label>
-                            <input type="text" name="Relationship" class="form-control" value="<?php echo $Relationship; ?>">
-                            <span class="help-block"><?php echo $Relationship_err;?></span>
+						<div class="form-group <?php echo (!empty($employee_id_err)) ? 'has-error' : ''; ?>">
+                            <label>Employee ID</label>
+                            <input type="text" name="employee_id" class="form-control" value="<?php echo $employee_id; ?>">
+                            <span class="help-block"><?php echo $employee_id_err;?></span>
                         </div>
 				
-						<div class="form-group <?php echo (!empty($Sex_err)) ? 'has-error' : ''; ?>">
-                            <label>Sex</label>
-                            <input type="text" name="Sex" class="form-control" value="<?php echo $Sex; ?>">
-                            <span class="help-block"><?php echo $Sex_err;?></span>
-                        </div>
-						                  
-						<div class="form-group <?php echo (!empty($Bdate_err)) ? 'has-error' : ''; ?>">
-                            <label>Birth date</label>
-                            <input type="date" name="Bdate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
-                            <span class="help-block"><?php echo $Bdate_err;?></span>
+						<div class="form-group <?php echo (!empty($salary_err)) ? 'has-error' : ''; ?>">
+                            <label>Salary</label>
+                            <input type="number" name="salary" class="form-control" value="<?php echo $salary; ?>">
+                            <span class="help-block"><?php echo $salary_err;?></span>
                         </div>
               
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="index.php" class="btn btn-default">Cancel</a>
+                        <a href="viewEmployee.php" class="btn btn-default">Cancel</a>
                     </form>
                 </div>
             </div>        
