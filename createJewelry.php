@@ -3,20 +3,20 @@
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$jewelry_id = $type = $primary_material = $price = $order_number = "";
-$jewelry_id_err = $type_err = $primary_material_err = $price_err = $order_number_err = "" ;
+$jewelry_id = $type = $primary_material = $price = "";
+$jewelry_id_err = $type_err = $primary_material_err = $price_err = "" ;
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate type
-    $type = trim($_POST["Type"]);
+    $type = trim($_POST["type"]);
     if(empty($type)){
         $type_err = "Please enter a jewelry type.";
     } elseif(!filter_var($type, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
         $type_err = "Please enter a valid jewelry type.";
     } 
     // Validate primary_material
-    $primary_material = trim($_POST["Primary Material"]);
+    $primary_material = trim($_POST["primary_material"]);
     if(empty($primary_material)){
         $primary_material_err = "Please enter a primary material.";
     } elseif(!filter_var($primary_material, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
@@ -24,45 +24,40 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } 
  
     // Validate jewelry_id
-    $jewelry_id = trim($_POST["Jewelry ID"]);
+    $jewelry_id = trim($_POST["jewelry_id"]);
     if(empty($jewelry_id)){
         $jewelry_id_err = "Please enter a jewelry ID.";     
-    } elseif(!ctype_digit($Ssn)){
+    } elseif(!ctype_digit($jewelry_id)){
         $jewelry_id_err = "Please enter a positive integer jewelry ID.";
     } 
-    // Validate order_number
-    $order_number = trim($_POST["Order Number"]);
-    if(empty($order_number)){
-        $order_number_err = "Please enter an order number.";     
-    }
+    
 	// Validate price
-    $price = trim($_POST["Price"]);
+    $price = trim($_POST["price"]);
     if(empty($price)){
         $price_err = "Please enter a monetary value.";     
     }
 
     // Check input errors before inserting in database
     if(empty($jewelry_id_err) && empty($price_err) && empty($type_err) 
-				&& empty($order_number_err)&& empty($primary_material_err)){
+				&& empty($primary_material_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO fp_jewelry (jewelry_id, type, primary_material, price, order_number) 
-		        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO fp_jewelry (jewelry_id, type, primary_material, price) 
+		        VALUES (?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "isssdssi", $param_jewelry_id, $param_type, $param_primary_material, 
-				$param_price, $param_order_number);
+            mysqli_stmt_bind_param($stmt, "issi", $param_jewelry_id, $param_type, $param_primary_material, 
+				$param_price);
             
             // Set parameters
-			$param_jewelry_id = $jewelry_id;
+			$param_jewelry_id = (int)$jewelry_id;
             $param_primary_material = $primary_material;
 			$param_type = $type;
-			$param_price = $price;
-			$param_order_number = $order_number;
+			$param_price = (int)$price;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
-                // Records created successfully. Redirect to landing page
+                // Jewelry created successfully. Redirect to landing page
 				    header("location: index.php");
 					exit();
             } else{
@@ -84,7 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Record</title>
+    <title>Create Jewelry</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper{
@@ -124,13 +119,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <input type="text" name="price" class="form-control" value="<?php echo $price; ?>">
                             <span class="help-block"><?php echo $price_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($order_number_err)) ? 'has-error' : ''; ?>">
-                            <label>Order Number</label>
-                            <input type="text" name="order_number" class="form-control" value="<?php echo $order_number; ?>">
-                            <span class="help-block"><?php echo $order_number_err;?></span>
-                        </div>
 		
-                        </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <a href="index.php" class="btn btn-default">Cancel</a>
                     </form>
