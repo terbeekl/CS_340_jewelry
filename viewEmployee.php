@@ -76,7 +76,7 @@ if(isset($_SESSION["shop_address"]) ){
 				echo "<th>Employee Name</th>";
 				echo "<th>Employee ID</th>";
 				echo "<th>Salary</th>";
-				echo "<th>Delete Employee</th>";
+				echo "<th>Edit Employee Data</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";							
@@ -87,7 +87,7 @@ if(isset($_SESSION["shop_address"]) ){
 			echo "<td>" . $row['employee_id'] . "</td>";
 			echo "<td>$" . $row['salary'] . ".00</td>";
 						echo "<td>";
-						  //echo "<a href='updateDependent.php?Dname=". $row['Dependent_name'] ."' title='Update Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+						  echo "<a href='updateEmployee.php?employee_id=". $row['employee_id'] ."' title='Update Employee' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                           echo "<a href='deleteEmployee.php?employee_id=". $row['employee_id'] ."' title='Delete Employee' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                         echo "</td>";
 						echo "</tr>";
