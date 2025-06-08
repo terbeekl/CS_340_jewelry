@@ -95,7 +95,21 @@ if(isset($_SESSION["order_number"]) ){
                     }
                     echo "</tbody>";                            
                 echo "</table>";				
-				mysqli_free_result($result);
+		    mysqli_free_result($result);
+			
+		    // Add Jewelry to Order form
+echo "<h4>Add Jewelry to Order #" . $_SESSION["order_number"] . "</h4>";
+echo '<form action="createOrderJewelry.php" method="post" class="form-inline">';
+echo '    <input type="hidden" name="order_number" value="' . htmlspecialchars($_SESSION["order_number"]) . '">';
+echo '    <div class="form-group">';
+echo '        <label for="jewelry_id">Jewelry ID: </label>';
+echo '        <input type="text" class="form-control" name="jewelry_id" id="jewelry_id" required>';
+echo '    </div> ';
+echo '    <button type="submit" class="btn btn-success">Add Jewelry</button>';
+echo '</form><br>';
+
+
+
 			} else {
 				echo "No Jewelry In Order ";
 			}
