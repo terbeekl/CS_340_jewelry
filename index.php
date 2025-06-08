@@ -41,16 +41,22 @@
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12"> 
 		    <div class="page-header clearfix">
-            <nav>
-                </br>
-                <a href="index.php">Home</a> | 
-                <a href="viewShops.php">View Shops</a> | 
-                <a href="viewCustomers.php">View Customers</a>
-            </nav>
-		     <h2> Jewelry Shop Database </h2> 
-                       <p>Hailey, Lydia, and Salem's Jewelry Store				
+                <div class="page-header text-center">
+                    <img src="https://media.istockphoto.com/id/990529836/vector/diamond-cartoon-vector-and-illustration.jpg?s=612x612&w=0&k=20&c=rnshYB7JCT7wxTwzC1RY5nqU4LrFWB6CJMXQ6X5d_N4="  
+                        style="height: 70px">
+                    <h2> Jewelry Shop Database </h2> 
+                    <p>Hailey, Lydia, and Salem's Jewelry Store	
+                </div>
+                <nav class ="text-center">
+                    <a href="viewShops.php">View Shops</a> | 
+                    <a href="viewCustomers.php">View Customers</a>
+                    </br>
+                    </br>
+                </nav>
+            
+                    			
 		       <h2 class="pull-left">Jewelry</h2>
                <a href="createJewelry.php" class="btn btn-success pull-right">Add Jewelry</a>
                     </div>
