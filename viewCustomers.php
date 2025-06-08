@@ -68,7 +68,7 @@
                                 echo "<td>" . $row['c_email'] . "</td>";
                                 echo "<td>" . $row['customer_id'] . "</td>";
                                 echo "<td>";
-                                    echo "<a href='viewOrders.php?customer_id=". $row['customer_id']."&c_name=".$row['c_name']."' title='View Orders' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                                    echo "<a href='viewOrders.php?customer_id=". $row['customer_id']."&c_name=".$row['c_name']."' title='View Orders' data-toggle='tooltip'><span class='glyphicon glyphicon-shopping-cart'></span></a>";
                                 echo "</td>";
                             echo "</tr>";
                         }

@@ -75,8 +75,8 @@
                             echo "<tr>";
                                 echo "<td>" . $row['shop_address'] . "</td>";
                                 echo "<td>";
-                                    echo "<a href='viewEmployee.php?shop_address=". $row['shop_address']."' title='View Employees' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-				echo "<a href='viewStock.php?shop_address=". $row['shop_address']."' title='View Stock' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                echo "<a href='viewEmployee.php?shop_address=". $row['shop_address']."' title='View Employees' data-toggle='tooltip'><span class='glyphicon glyphicon-user'></span></a>";
+				echo "<a href='viewStock.php?shop_address=". $row['shop_address']."' title='View Stock' data-toggle='tooltip'><span class='glyphicon glyphicon-pushpin'></span></a>";
 				echo "<a href='viewVisitRecords.php?shop_address=". $row['shop_address']."' title='View Customer Vist History' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
 				echo "</td>";
                             echo "</tr>";
