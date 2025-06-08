@@ -55,7 +55,11 @@ if(isset($_GET["shop_address"]) && !empty(trim($_GET["shop_address"]))){
 if(isset($_SESSION["shop_address"]) ){
 	
     // Prepare a select statement
-    $sql = "SELECT * FROM fp_stock WHERE shop_address = ? ";
+    //$sql = "SELECT * FROM fp_stock WHERE shop_address = ? ";
+    $sql = "SELECT s.jewelry_id, j.type, s.quantity_in_stock
+            FROM fp_stock s
+            JOIN fp_jewelry j ON s.jewelry_id = j.jewelry_id
+            WHERE s.shop_address = ?";
   
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -72,16 +76,18 @@ if(isset($_SESSION["shop_address"]) ){
 				echo "<table class='table table-bordered table-striped'>";
                     echo "<thead>";
                         echo "<tr>";
-				echo "<th>Jewelry ID</th>";
-				echo "<th>Quantity In Stock</th>";
+				            echo "<th>Jewelry ID</th>";
+                            echo "<th>Jewelry Type</th>";
+				            echo "<th>Quantity In Stock</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";							
 				// output data of each row
                     while($row = mysqli_fetch_array($result)){
                         echo "<tr>";
-			echo "<td>" . $row['jewelry_id'] . "</td>";
-			echo "<td>" . $row['quantity_in_stock'] . "</td>";
+			                echo "<td>" . $row['jewelry_id'] . "</td>";
+                            echo "<td>" . $row['type'] . "</td>";
+			                echo "<td>" . $row['quantity_in_stock'] . "</td>";
 						//echo "<td>";
 						  //echo "<a href='updateDependent.php?Dname=". $row['Dependent_name'] ."' title='Update Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                           //echo "<a href='deleteDependent.php?Dname=". $row['Dependent_name'] ."' title='Delete Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
