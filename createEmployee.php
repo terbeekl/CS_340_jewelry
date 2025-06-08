@@ -87,7 +87,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="col-md-12">
                     <div class="page-header">
                         <h2>Create Employee</h2>
-						<h3> For <?php echo $shop_address; ?>: </h3>
+						<h3> For Location on <?php echo $shop_address; ?>: </h3>
                     </div>
                     
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">

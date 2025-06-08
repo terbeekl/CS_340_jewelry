@@ -1,55 +1,38 @@
 <?php
-	session_start();
-	if(isset($_GET["Dname"]) && !empty(trim($_GET["Dname"]))){
-		$_SESSION["Dname"] = $_GET["Dname"];
-		$Dname = $_GET["Dname"];
-	}
+session_start();
 
-    require_once "config.php";
-	// Delete an Dependents's record after confirmation
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if(isset($_SESSION["Ssn"]) && !empty($_SESSION["Ssn"])){ 
-			$Essn = $_SESSION['Ssn'];
-			$Dname = $_SESSION['Dname'];
-			
-			// Prepare a delete statement
-			$sql = "DELETE FROM DEPENDENT WHERE Essn = ? 
-						AND Dependent_name = ?";
-   
-			if($stmt = mysqli_prepare($link, $sql)){
-			// Bind variables to the prepared statement as parameters
-				mysqli_stmt_bind_param($stmt, "ss", $param_Essn, $param_Dname);
- 
-				// Set parameters
-				$param_Essn = $Essn;
-				$param_Dname = $Dname;
-				//echo $Essn;
-				//echo $Dname;
+require_once "config.php";
 
-				// Attempt to execute the prepared statement
-				if(mysqli_stmt_execute($stmt)){
-					// Records deleted successfully. Redirect to landing page
-					header("location: index.php");
-					exit();
-				} else{
-					echo "Error deleting the employee";
-				}
-			}
-		}
-		// Close statement
-		mysqli_stmt_close($stmt);
-    
-		// Close connection
-		mysqli_close($link);
-	} else{
-		// Check existence of id parameter
-		if(empty(trim($_GET["Dname"]))){
-			// URL doesn't contain id parameter. Redirect to error page
-			header("location: error.php");
-			exit();
-		}
-	}
-	
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    if (!isset($_GET["employee_id"]) || empty(trim($_GET["employee_id"]))) {
+        header("location: error.php");
+        exit();
+    }
+    $_SESSION["employee_id"] = $_GET["employee_id"];
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_SESSION["employee_id"]) && !empty($_SESSION["employee_id"])) {
+        $employee_id = $_SESSION["employee_id"];
+
+        $sql = "DELETE FROM fp_employee WHERE employee_id = ?";
+
+        if ($stmt = mysqli_prepare($link, $sql)) {
+            mysqli_stmt_bind_param($stmt, "i", $param_employee_id);
+            $param_employee_id = $employee_id;
+
+            if (mysqli_stmt_execute($stmt)) {
+                header("location: viewEmployee.php");
+                exit();
+            } else {
+                echo "Error deleting the employee.";
+            }
+
+            mysqli_stmt_close($stmt);
+        }
+        mysqli_close($link);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,11 +57,10 @@
                     </div>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="alert alert-danger fade in">
-                            <input type="hidden" name="Ssn" value="<?php echo ($_SESSION["Ssn"]); ?>"/>
-                            <p>Are you sure you want to delete the record for Dependent of 
-							     <?php echo ($_SESSION["Ssn"]); echo " ".$Dname; ?>?</p><br>
+                            <input type="hidden" name="employee_id" value="<?php echo ($_SESSION["employee_id"]); ?>"/>
+                            <p>Are you sure you want to delete the record for Employee #<?php echo ($_SESSION["employee_id"]); ?>?</p><br>
                                 <input type="submit" value="Yes" class="btn btn-danger">
-                                <a href="index.php" class="btn btn-default">No</a>
+                                <a href="viewEmployee.php" class="btn btn-default">No</a>
                             </p>
                         </div>
                     </form>
