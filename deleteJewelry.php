@@ -18,12 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_stmt_execute($check_stmt);
             mysqli_stmt_bind_result($check_stmt, $num_items);
 
-            if (mysqli_stmt_fetch($check_stmt)) {
-                if ($num_items > 0) {
-                    echo "Cannot delete: jewelry still in stock.";
-                    exit();
-                }
-            }
             mysqli_stmt_close($check_stmt);
         }
 

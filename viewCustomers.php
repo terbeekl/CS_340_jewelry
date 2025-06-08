@@ -43,7 +43,8 @@
                             </br>
                             </br>
                         </nav>
-                        <h2 class="pull-left">View Customers</h2>
+			<h2 class="pull-left">View Customers</h2>
+			<a href="createCustomer.php" class="btn btn-success pull-right">Add Customer</a>
                     </div>
 <?php	
 	
