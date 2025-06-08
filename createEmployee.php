@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }	
 
     // Check input errors before inserting in database
-    if(empty($employee_id_err) && empty($salary_err) && empty($e_name_err) && empty($Bdate_err)){
+    if(empty($employee_id_err) && empty($salary_err) && empty($e_name_err)){
         // Prepare an insert statement
         $sql = "INSERT INTO fp_employee (shop_address, e_name, salary, employee_id) 
 		        VALUES (?, ?, ?, ?)";

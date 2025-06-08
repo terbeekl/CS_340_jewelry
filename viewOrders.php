@@ -44,7 +44,7 @@
                             </br>
                         </nav>
                         <h2 class="pull-left">View Orders</h2>
-						<a href="addOrder.php" class="btn btn-success pull-right">Add Order</a>
+						<a href="createOrder.php" class="btn btn-success pull-right">Add Order</a>
                     </div>
 <?php
 
@@ -77,6 +77,9 @@ if(isset($_SESSION["customer_id"]) ){
                     echo "<thead>";
                         echo "<tr>";
 				echo "<th>Order Number</th>";
+				echo "<th>Date Placed</th>";
+				echo "<th>Number of Items</th>";
+				echo "<th>Cost</th>";
 				echo "<th>View Order Jewelry</th>";
                         echo "</tr>";
                     echo "</thead>";
@@ -84,7 +87,10 @@ if(isset($_SESSION["customer_id"]) ){
 				// output data of each row
                     while($row = mysqli_fetch_array($result)){
                         echo "<tr>";
-                        echo "<td>" . $row['order_number'] . "</td>";
+			echo "<td>" . $row['order_number'] . "</td>";
+			echo "<td>" . $row['date'] . "</td>";
+			echo "<td>" . $row['num_items'] . "</td>";
+			echo "<td>$" . $row['cost'] . ".00</td>";
 						echo "<td>";
 						  echo "<a href='viewOrderJewelry.php?order_number=". $row['order_number'] ."' title='View Order Jewelry' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
                           //echo "<a href='deleteDependent.php?Dname=". $row['Dependent_name'] ."' title='Delete Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
