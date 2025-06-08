@@ -55,12 +55,9 @@ if(isset($_GET["shop_address"]) && !empty(trim($_GET["shop_address"]))){
 if(isset($_SESSION["shop_address"]) ){
 	
     // Prepare a select statement
-    //$sql = "SELECT * FROM fp_visits WHERE shop_address = ? ";
-    $sql = "SELECT v.customer_id, c.c_name 
-        FROM fp_visits v 
+    $sql = "SELECT v.customer_id, c.c_name FROM fp_visits v 
         JOIN fp_customer c ON v.customer_id = c.customer_id 
         WHERE v.shop_address = ?";
-  
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
         mysqli_stmt_bind_param($stmt, "s", $param_addy);      
