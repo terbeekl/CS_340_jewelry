@@ -83,13 +83,13 @@
                                 while($row = mysqli_fetch_array($result)){
 					echo "<tr>";
 					echo "<td>" . $row['jewelry_id'] . "</td>";
-                                        echo "<td>" . $row['type'] . "</td>";
-                                        echo "<td>" . $row['primary_material'] . "</td>";
-                                        echo "<td>$" . $row['price'] . ".00</td>";
-                                        echo "<td>";
-                                            echo "<a href='updateJewelry.php?Ssn=". $row['Ssn'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-					  echo "<a href='deleteJewelry.php?jewelry_id=". $row['jewelry_id'] ."' title='Delete Jewelry' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";  
-					   echo "</td>";
+                        echo "<td>" . $row['type'] . "</td>";
+                        echo "<td>" . $row['primary_material'] . "</td>";
+                        echo "<td>$" . $row['price'] . ".00</td>";
+                        echo "<td>";
+                        echo "<a href='updateJewelry.php?jewelry_id=". $row['jewelry_id'] ."' title='Update Jewelry' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                        echo "<a href='deleteJewelry.php?jewelry_id=". $row['jewelry_id'] ."' title='Delete Jewelry' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";  
+					echo "</td>";
                                     echo "</tr>";
                                 }
                                 echo "</tbody>";                            
