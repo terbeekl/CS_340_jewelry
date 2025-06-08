@@ -73,14 +73,18 @@ if(isset($_SESSION["shop_address"]) ){
 				echo "<table class='table table-bordered table-striped'>";
                     echo "<thead>";
                         echo "<tr>";
-                            echo "<th>Employee Name</th>";
+				echo "<th>Employee Name</th>";
+				echo "<th>Employee ID</th>";
+				echo "<th>Salary</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";							
 				// output data of each row
                     while($row = mysqli_fetch_array($result)){
                         echo "<tr>";
-                        echo "<td>" . $row['e_name'] . "</td>";
+			echo "<td>" . $row['e_name'] . "</td>";
+			echo "<td>" . $row['employee_id'] . "</td>";
+			echo "<td>$" . $row['salary'] . ".00</td>";
 						//echo "<td>";
 						  //echo "<a href='updateDependent.php?Dname=". $row['Dependent_name'] ."' title='Update Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                           //echo "<a href='deleteDependent.php?Dname=". $row['Dependent_name'] ."' title='Delete Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";

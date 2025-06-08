@@ -33,12 +33,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($employee_id_err) && empty($salary_err) && empty($e_name_err) && empty($Bdate_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO DEPENDENT (shop_address, e_name, salary, employee_id) 
+        $sql = "INSERT INTO fp_employee (shop_address, e_name, salary, employee_id) 
 		        VALUES (?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_shop_address, $param_e_name, $param_salary, 
+            mysqli_stmt_bind_param($stmt, "sssi", $param_shop_address, $param_e_name, $param_salary, 
 									$param_employee_id);
            
             // Set parameters
@@ -50,10 +50,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Records created successfully. Redirect to landing page
-				    header("location: index.php");
+				    header("location: viewEmployee.php");
 					exit();
             } else{
-                echo "<center><h4>Error while creating new dependent</h4></center>";
+                echo "<center><h4>Error while creating new employee</h4></center>";
 				$Dname_err = "Re-enter all values";
             }
         }
