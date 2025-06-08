@@ -54,7 +54,11 @@ if(isset($_GET["order_number"]) && !empty(trim($_GET["order_number"]))){
 
 if(isset($_SESSION["order_number"]) ){
     // Prepare a select statement
-    $sql = "SELECT * FROM fp_order_jewelry WHERE order_number = ? ";
+    //$sql = "SELECT * FROM fp_order_jewelry WHERE order_number = ? ";
+    $sql = "SELECT o.jewelry_id, j.type, j.price 
+        FROM fp_order_jewelry o
+        JOIN fp_jewelry j ON o.jewelry_id = j.jewelry_id 
+        WHERE o.order_number = ?";
 
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -72,6 +76,8 @@ if(isset($_SESSION["order_number"]) ){
                     echo "<thead>";
                         echo "<tr>";
 				echo "<th>Jewelry ID</th>";
+                echo "<th>Jewelry Type</th>";
+                echo "<th>Price</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";							
@@ -79,6 +85,8 @@ if(isset($_SESSION["order_number"]) ){
                     while($row = mysqli_fetch_array($result)){
                         echo "<tr>";
 			echo "<td>" . $row['jewelry_id'] . "</td>";
+            echo "<td>" . $row['type'] . "</td>";
+            echo "<td>$" . $row['price'] . ".00</td>";
 						//echo "<td>";
 						  //echo "<a href='updateDependent.php?Dname=". $row['Dependent_name'] ."' title='Update Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                           //echo "<a href='deleteDependent.php?Dname=". $row['Dependent_name'] ."' title='Delete Dependent' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
