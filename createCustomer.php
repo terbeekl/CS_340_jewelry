@@ -144,8 +144,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <span class="help-block"><?php echo $sec_code_err;?></span>
 			</div>
 <div class="form-group <?php echo (!empty($exp_date_err)) ? 'has-error' : ''; ?>">
-                            <label>Expiration Date</label>
-                            <input type="text" name="exp_date" class="form-control" value="<?php echo $exp_date; ?>">
+                            <label>Expiration Date</label> 
+                            <input type="date" name="exp_date" class="form-control" value="<?php echo $exp_date; ?>">
                             <span class="help-block"><?php echo $exp_date_err;?></span>
                         </div>
 		
