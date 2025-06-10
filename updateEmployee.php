@@ -151,7 +151,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h3>Update Record for Employee #= <?php echo $_GET["employee_id"]; ?> </H3>
+                        <h3>Update Record for Employee #<?php echo $_GET["employee_id"]; ?> </H3>
                     </div>
                     <p>Please edit the input values and submit to update.
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
