@@ -1,4 +1,9 @@
 <?php
+/*
+ * CS_340, Spring 2025
+ * Group 6: Lydia TerBeek, Hailey Prater, Salem Demssie
+ */
+
 require_once "config.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

@@ -1,27 +1,8 @@
 <?php
-	/* Display Errors */
-	//ini_set('display_errors', 1);
-	//ini_set('display_startup_errors', 1);
-	//error_reporting(E_ALL);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+/*
+ * CS_340, Spring 2025
+ * Group 6: Lydia TerBeek, Hailey Prater, Salem Demssie
+ */
 	
 	mysqli_report(MYSQLI_REPORT_ERROR );
 

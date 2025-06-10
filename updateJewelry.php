@@ -1,4 +1,9 @@
 <?php
+/*
+ * CS_340, Spring 2025
+ * Group 6: Lydia TerBeek, Hailey Prater, Salem Demssie
+ */
+
 session_start();
 require_once "config.php";
 

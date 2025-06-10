@@ -1,4 +1,9 @@
 <?php
+/*
+ * CS_340, Spring 2025
+ * Group 6: Lydia TerBeek, Hailey Prater, Salem Demssie
+ */
+
 session_start();
 
 if (isset($_GET["jewelry_id"]) && !empty(trim($_GET["jewelry_id"]))) {
