@@ -13,40 +13,26 @@ if (isset($_GET["jewelry_id"]) && !empty(trim($_GET["jewelry_id"]))) {
 
 require_once "config.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_SESSION["jewelry_id"]) && !empty($_SESSION["jewelry_id"])) {
-        $jewelry_id = $_SESSION["jewelry_id"];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["jewelry_id"])) {
+    $jewelry_id = $_SESSION["jewelry_id"];
 
-        $check_sql = "SELECT num_items FROM fp_stock WHERE jewelry_id = ?";
-        if ($check_stmt = mysqli_prepare($link, $check_sql)) {
-            mysqli_stmt_bind_param($check_stmt, "i", $jewelry_id);
-            mysqli_stmt_execute($check_stmt);
-            mysqli_stmt_bind_result($check_stmt, $num_items);
+    // Attempt deletion
+    $delete_sql = "DELETE FROM fp_jewelry WHERE jewelry_id = ?";
+    if ($stmt = mysqli_prepare($link, $delete_sql)) {
+        mysqli_stmt_bind_param($stmt, "i", $jewelry_id);
 
-            mysqli_stmt_close($check_stmt);
+        // Execute and check for errors
+        if (mysqli_stmt_execute($stmt)) {
+            // Success: Redirect
+            header("Location: index.php");
+            exit();
+        } else {
+            // Failure: Display MySQL error (including trigger message)
+            $error = mysqli_error($link);
+            echo "Error: " . $error; // Shows "Cannot delete: Jewelry still in stock."
         }
-
-        $delete_order_sql = "DELETE FROM fp_order_jewelry WHERE jewelry_id = ?";
-        if ($stmt_order = mysqli_prepare($link, $delete_order_sql)) {
-            mysqli_stmt_bind_param($stmt_order, "i", $jewelry_id);
-            mysqli_stmt_execute($stmt_order);
-            mysqli_stmt_close($stmt_order);
-        }
-
-        $delete_jewelry_sql = "DELETE FROM fp_jewelry WHERE jewelry_id = ?";
-        if ($stmt = mysqli_prepare($link, $delete_jewelry_sql)) {
-            mysqli_stmt_bind_param($stmt, "i", $jewelry_id);
-
-            if (mysqli_stmt_execute($stmt)) {
-                header("location: index.php");
-                exit();
-            } else {
-                echo "Cannot delete: jewelry still in stock.";
-            }
-
-            mysqli_stmt_close($stmt);
-        }
-        mysqli_close($link);
+    } else {
+        echo "Error preparing statement: " . mysqli_error($link);
     }
 } else {
     if (empty(trim($_GET["jewelry_id"]))) {
