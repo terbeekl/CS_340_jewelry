@@ -1,13 +1,9 @@
--- CS_340 | Spring 2025
--- Group 6: Lydia TerBeek, Hailey Prater, Salem Demssie
-
-
 -- phpMyAdmin SQL Dump
 -- version 5.2.2-1.el9.remi
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 10, 2025 at 02:39 PM
+-- Generation Time: Jun 11, 2025 at 10:27 AM
 -- Server version: 10.11.11-MariaDB-log
 -- PHP Version: 8.4.8
 
@@ -76,20 +72,19 @@ CREATE TABLE `fp_employee` (
 --
 
 INSERT INTO `fp_employee` (`employee_id`, `salary`, `e_name`, `shop_address`) VALUES
+(111222, 34500, 'Gertrude Banker', '345 SW Mangrove St'),
 (230001, 33000, 'Jimmy John Man', '111 NW 3rd St'),
 (230002, 38500, 'Bart Squareson', '122 Birch Ln'),
 (230003, 37000, 'Amanda Brunescelli', '222 4th St'),
-(230004, 39000, 'Gemina Porthouse', '345 SW Mangrove St'),
-(230005, 39500, 'Gerard Porthouse', '345 SW Mangrove St'),
 (230006, 48000, 'Helena Rockfield', '435 6th St'),
 (230007, 47500, 'Stewart Stepson', '435 6th St'),
 (230008, 40000, 'Wanda Statson', '579 Boltzman Ave'),
 (230009, 40000, 'Linda Bregese', '645 Lentz Ln'),
-(230010, 41000, 'Fritz Ferdinand', '645 Lentz Ln'),
 (230011, 42000, 'Harold Grant', '789 Oak St'),
 (230012, 39500, 'Gerald Schienden', '887 Lorenz Path'),
-(230013, 38750, 'Duke Chester', '978 Bart Rd'),
-(230014, 39000, 'Natalie Burgess', '978 Bart Rd');
+(230014, 39000, 'Natalie Burgess', '978 Bart Rd'),
+(333334, 34500, 'Bobby Jones', '111 NW 3rd St'),
+(333345, 30000, 'Gart Newsome', '345 SW Mangrove St');
 
 --
 -- Triggers `fp_employee`
@@ -122,7 +117,7 @@ CREATE TABLE `fp_jewelry` (
 --
 
 INSERT INTO `fp_jewelry` (`jewelry_id`, `type`, `primary_material`, `price`, `order_number`) VALUES
-(11, 'Cool Ring', 'Sterling Silver', 550, 430127),
+(101, 'Frost Ring', 'Silver', 550, 430127),
 (102, 'Celestial Bangle', 'Silver', 60, 430120),
 (103, 'Crimson Tide Cuff', 'Gold', 60, 430121),
 (104, 'Dark Quartz Earrings', 'Gold', 60, 430123),
@@ -157,13 +152,13 @@ DELIMITER $$
 CREATE TRIGGER `prevent_jewelry_deletion` BEFORE DELETE ON `fp_jewelry` FOR EACH ROW BEGIN
     DECLARE item_count INT;
 
-    SELECT num_items INTO item_count
+    SELECT quantity_in_stock INTO item_count
     FROM fp_stock
     WHERE jewelry_id = OLD.jewelry_id;
-
+    
     IF item_count IS NOT NULL AND item_count > 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Cannot delete: Jewelry still in stock.';
+    	SIGNAL SQLSTATE '45000'
+    	SET MESSAGE_TEXT = 'Cannot delete: Jewelry still in stock.';
     END IF;
 END
 $$
@@ -235,11 +230,9 @@ CREATE TABLE `fp_order_jewelry` (
 --
 
 INSERT INTO `fp_order_jewelry` (`jewelry_id`, `order_number`) VALUES
-(101, 430127),
 (102, 430120),
 (103, 430120),
 (103, 430121),
-(104, 430123),
 (105, 430126),
 (106, 430124),
 (106, 430128),
@@ -267,7 +260,6 @@ INSERT INTO `fp_order_jewelry` (`jewelry_id`, `order_number`) VALUES
 (124, 430129),
 (126, 430120),
 (127, 430129),
-(131, 430128),
 (98238484, 430121);
 
 --
@@ -343,7 +335,7 @@ CREATE TABLE `fp_stock` (
 --
 
 INSERT INTO `fp_stock` (`quantity_in_stock`, `shop_address`, `jewelry_id`) VALUES
-(1, '111 NW 3rd St', 11),
+(1, '111 NW 3rd St', 101),
 (1, '111 NW 3rd St', 104),
 (1, '122 Birch Ln', 102),
 (2, '222 4th St', 103),
